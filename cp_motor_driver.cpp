@@ -11,10 +11,12 @@ CPMotorDriver::CPMotorDriver(motor_driver_pin pin)
 
 void CPMotorDriver::setPins(motor_driver_pin pin) {
   pins = pin;
+  pinMode(pins.ena, OUTPUT);
   pinMode(pins.in1, OUTPUT);
   pinMode(pins.in2, OUTPUT);
   pinMode(pins.in3, OUTPUT);
   pinMode(pins.in4, OUTPUT);
+  pinMode(pins.enb, OUTPUT);
 }
 
 void CPMotorDriver::forward() {

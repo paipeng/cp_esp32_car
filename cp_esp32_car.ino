@@ -1,5 +1,5 @@
 #include "cp_car.h"
-
+#include "CPOledDisplay.h"
 #include <BluetoothSerial.h>
 //#define USE_PIN // Uncomment this to use PIN during pairing. The pin is specified on the line below
 const char *pin = "1211";
@@ -30,6 +30,8 @@ BluetoothSerial SerialBT;
 
 CPCar car;
 
+CPOledDisplay display;
+
 
 void setup() {
   delay(1000);
@@ -37,6 +39,13 @@ void setup() {
 
   Serial.println("Serial inited");
   delay(2000);
+
+  Serial.println("init display...");
+  display.init();
+
+  display.setStatus("CP-Car: " + device_name);
+  delay(2000);
+
 
   SerialBT.begin(device_name);
   Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
@@ -66,6 +75,9 @@ void setup() {
   car.init(front_driver_pin, back_driver_pin, 2);
 
   delay(2000);  //延时200ms
+
+
+  display.setStatus("CP-Car ready: " + device_name);
 }
 
 void loop() {
@@ -75,7 +87,24 @@ void loop() {
     SerialBT.write(Serial.read());
   }
   if (SerialBT.available()) {
-    Serial.write(SerialBT.read());
+    int r = SerialBT.read();
+    if (r == 'f') {
+      car.forward();
+      display.setStatus("forward");
+    } else if (r == 'b') {
+      car.backward();
+      display.setStatus("backward");
+    } else if (r == 'l') {
+      car.left();
+      display.setStatus("left");
+    } else if (r == 'r') {
+      car.right();
+      display.setStatus("right");
+    } else if (r == 's') {
+      car.stop();
+      display.setStatus("stop");
+    }
+    Serial.write(r);
   }
   delay(20);
 }

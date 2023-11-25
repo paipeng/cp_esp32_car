@@ -10,6 +10,7 @@ void CPCar::init(motor_driver_pin frontDriverPin, motor_driver_pin backDriverPin
   backMotorDriver.setPins(backDriverPin);
 }
 void CPCar::forward() {
+  Serial.println("car forward");
   if (mode == 2) {
     frontMotorDriver.backward();
     backMotorDriver.forward();
@@ -20,6 +21,7 @@ void CPCar::forward() {
   }
 }
 void CPCar::backward() {
+  Serial.println("car backward");
   if (mode == 2) {
     frontMotorDriver.forward();
     backMotorDriver.backward();
@@ -30,6 +32,7 @@ void CPCar::backward() {
   }
 }
 void CPCar::left() {
+  Serial.println("car left");
   if (mode == 2) {
     frontMotorDriver.left();
     backMotorDriver.left();
@@ -40,6 +43,7 @@ void CPCar::left() {
   }
 }
 void CPCar::right() {
+  Serial.println("car right");
   if (mode == 2) {
     frontMotorDriver.right();
     backMotorDriver.right();
@@ -51,6 +55,7 @@ void CPCar::right() {
 }
 
 void CPCar::stop() {
+  Serial.println("car stop");
   if (mode == 2) {
     frontMotorDriver.stop();
     backMotorDriver.stop();
