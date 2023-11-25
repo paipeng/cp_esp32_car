@@ -21,6 +21,7 @@ public:
   void backward();
   void left();
   void right();
+  void stop();
 
 private:
   motor_driver_pin pins;

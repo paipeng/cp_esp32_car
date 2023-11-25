@@ -14,6 +14,7 @@ public:
   void backward();
   void left();
   void right();
+  void stop();
 private:
   CPMotorDriver frontMotorDriver;
   CPMotorDriver backMotorDriver;
