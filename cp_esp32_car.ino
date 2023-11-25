@@ -37,6 +37,8 @@ void setup() {
 
   Serial.println("Serial inited");
   delay(2000);
+
+  SerialBT.begin(device_name);
   Serial.printf("The device with name \"%s\" is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str());
 //Serial.printf("The device with name \"%s\" and MAC address %s is started.\nNow you can pair it with Bluetooth!\n", device_name.c_str(), SerialBT.getMacString()); // Use this after the MAC method is implemented
 #ifdef USE_PIN
