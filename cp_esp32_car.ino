@@ -1,6 +1,19 @@
+#include "cp_car.h"
 
-//定义LED1管脚
-const int CP_GPIO[8] = {15, 2, 0, 4, 16, 17, 5, 18};
+// Motor Driver 0: back
+#define DRIVER_0_IN1_PIN 27  // The ESP32 pin GPIO27 connected to the IN1 pin L298N
+#define DRIVER_0_IN2_PIN 26  // The ESP32 pin GPIO26 connected to the IN2 pin L298N
+#define DRIVER_0_IN3_PIN 25  // The ESP32 pin GPIO25 connected to the IN3 pin L298N
+#define DRIVER_0_IN4_PIN 33  // The ESP32 pin GPIO33 connected to the IN4 pin L298N
+
+// Motor Driver 1: front
+#define DRIVER_1_IN1_PIN 4   // The ESP32 pin GPIO27 connected to the IN1 pin L298N
+#define DRIVER_1_IN2_PIN 0   // The ESP32 pin GPIO26 connected to the IN2 pin L298N
+#define DRIVER_1_IN3_PIN 2   // The ESP32 pin GPIO25 connected to the IN3 pin L298N
+#define DRIVER_1_IN4_PIN 15  // The ESP32 pin GPIO33 connected to the IN4 pin L298N
+
+CPCar car;
+
 
 void setup() {
   delay(1000);
@@ -9,32 +22,24 @@ void setup() {
   Serial.println("Serial inited");
   delay(2000);
 
-  //设置LED1引脚为输出模式  
-  for (int i = 0; i < 8; i++) {
-    pinMode(CP_GPIO[i], OUTPUT);
-  }
-  
-  //LED1引脚输出高电平，点亮
-  setState(HIGH);
-  delay(2000);//延时200ms
-  setState(LOW);
-}
 
-void setState(int state) {
-  for (int i = 0; i < 8; i++) {
-    digitalWrite(CP_GPIO[i], state);
-  }
-}
+  motor_driver_pin front_driver_pin;
+  front_driver_pin.in1 = DRIVER_0_IN1_PIN;
+  front_driver_pin.in2 = DRIVER_0_IN2_PIN;
+  front_driver_pin.in3 = DRIVER_0_IN3_PIN;
+  front_driver_pin.in4 = DRIVER_0_IN4_PIN;
 
-void blink(int gpio) {
-  digitalWrite(gpio, HIGH);//LED1引脚输出高电平，点亮
-  delay(200);//延时200ms
-  digitalWrite(gpio, LOW);//LED1引脚输出低电平，熄灭
-  delay(200);//延时200ms
+  motor_driver_pin back_driver_pin;
+  back_driver_pin.in1 = DRIVER_1_IN1_PIN;
+  back_driver_pin.in2 = DRIVER_1_IN2_PIN;
+  back_driver_pin.in3 = DRIVER_1_IN3_PIN;
+  back_driver_pin.in4 = DRIVER_1_IN4_PIN;
+
+  car.init(front_driver_pin, back_driver_pin, 2);
+
+  delay(2000);  //延时200ms
 }
 
 void loop() {
-  for (int i = 0; i < 8; i++) {
-    blink(CP_GPIO[i]);
-  }  
+  car.forward();
 }
