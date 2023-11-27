@@ -32,16 +32,16 @@ void CPMotorDriver::backward() {
   digitalWrite(pins.in4, HIGH);
 }
 void CPMotorDriver::left() {
-  digitalWrite(pins.in1, LOW);
-  digitalWrite(pins.in2, HIGH);
-  digitalWrite(pins.in3, LOW);
-  digitalWrite(pins.in4, HIGH);
-}
-void CPMotorDriver::right() {
   digitalWrite(pins.in1, HIGH);
   digitalWrite(pins.in2, LOW);
   digitalWrite(pins.in3, HIGH);
   digitalWrite(pins.in4, LOW);
+}
+void CPMotorDriver::right() {
+  digitalWrite(pins.in1, LOW);
+  digitalWrite(pins.in2, HIGH);
+  digitalWrite(pins.in3, LOW);
+  digitalWrite(pins.in4, HIGH);
 }
 
 void CPMotorDriver::stop() {
